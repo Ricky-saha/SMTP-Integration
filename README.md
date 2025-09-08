@@ -1,3 +1,6 @@
+
+
+
 # SMTP Email Service – Flow Overview
 
 This service manages SMTP configurations and sends emails based on the selected source.
@@ -8,59 +11,69 @@ This service manages SMTP configurations and sends emails based on the selected 
 
 1. **Store SMTP Configs**
 
-   * Save configurations for Gmail, Zoho, Elastic, Outlook in MongoDB.And then fetch details for particular smtp source and send mails.
+   * Save configurations for Gmail, Zoho, Elastic, SendGrid, Outlook in MongoDB.
 
 2. **Create SMTP Config**
 
-   * Endpoint: `POST /smtp`
+   * Endpoint: `POST /api/smtp/create-smtp`
    * Body Example:
 
      ```json
      {
-       "source": "Gmail",
+       "source": "gmail",
        "host": "smtp.gmail.com",
-       "port": 465,
-       "secure": true,
-       "user": "example@gmail.com",
-       "pass": "yourpassword"
+       "port": 587,
+       "secure": false,
+       "user": "rickysahawork@gmail.com",
+       "pass": "vtgombeorswwztxv"
      }
      ```
-   * Saves the SMTP configuration in the database 
+   * Saves the SMTP configuration in the database.
 
 3. **Update SMTP Config**
 
-   * Body Example
+   * Endpoint: `PUT /api/smtp/update-smtp/{source}`
+   * Body Example (only include fields to update):
 
      ```json
      {
-       "host": "smtp.newhost.com",
-       "port": 587
+       "host": "smtp.jeemail.com",
+       "port": 255,
+       "secure": true,
+       "user": "rickysahawork@jeemail.com",
+       "pass": "mekijmogjrrsfuqh"
      }
      ```
    * Updates the existing configuration in the database.
 
-4. **Send Email Request**
+4. **Delete SMTP Config**
 
+   * Endpoint: `DELETE /api/smtp/delete-smtp/{source}`
+   * Deletes the SMTP configuration from the database.
+
+5. **Send Email Request**
+
+   * Endpoint: `POST /api/mail/send`
    * User sends a request via Postman with:
 
      ```json
      {
-       "source": "Gmail",
-       "emailFrom": "...",
-       "emailTo": "...",
-       "subject": "...",
-       "body": "..."
+       "source": "gmail",
+       "emailTo": "saharicky20@gmail.com",
+       "subject": "Test Email from Node.js",
+       "body": "Hello! Test mail from updated implementations."
      }
      ```
 
-5. **Fetch Config & Send**
+6. **Fetch Config & Send**
 
    * Service fetches SMTP config for the selected source.
    * Uses Nodemailer to send the email.
 
+7. **Email Sent & Response Stored**
 
-* Only SMTP **configurations** are stored, not sent emails.
-* Passwords are **securely encrypted**, not hashed.
-* Supports multiple email providers dynamically.
+   * Email is delivered successfully.
+   * The  payload  is stored in MongoDB for reference.
 
+---
 
