@@ -3,7 +3,6 @@ const mongoose = require ("mongoose");
 const mailSchema = mongoose.Schema({
   source: {
     type: String,
-    enum: ["gmail", "zoho", "elastic", "sendgrid"],
     required: true,
   },
 
