@@ -1,6 +1,6 @@
 const mongoose = require ("mongoose")
 const smtpConfigSchema = require("../schema/smtpSchema");
-const bcrypt = require("bcrypt")
+
 
 // creating an stmp config
 const createSmtpConfig = async (req, res) => {
